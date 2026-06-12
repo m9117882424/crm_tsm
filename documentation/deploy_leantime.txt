@@ -1,0 +1,39 @@
+Deploy Leantime on server
+
+Target folder: /opt/crm_tsm
+External port: 8082
+Do not use ports 8001, 6380 or 5433.
+
+Commands:
+
+cd /opt
+rm -rf /opt/crm_tsm
+git clone https://github.com/m9117882424/crm_tsm.git /opt/crm_tsm
+cd /opt/crm_tsm
+cp .env.example .env
+
+Generate passwords:
+openssl rand -base64 24
+openssl rand -base64 24
+
+Edit .env and replace:
+CHANGE_ME_DB_PASSWORD
+CHANGE_ME_ROOT_PASSWORD
+
+Start:
+docker compose up -d
+
+Check:
+docker compose ps
+docker compose logs --tail=100
+curl -I http://127.0.0.1:8082
+
+Open:
+http://185.237.218.166:8082/install
+
+Firewall:
+ufw allow 8082/tcp
+ufw status
+
+Backup later:
+backup Docker volumes leantime_db, leantime_userfiles and leantime_plugins.
