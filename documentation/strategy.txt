@@ -1,0 +1,35 @@
+CRM TSM strategy
+
+Decision: do not use OpenProject on the current VPS.
+
+Reason: the production OpenProject Docker Compose stack is too heavy for this server and uses too many services for the current pilot stage.
+
+Current server state:
+- auto-trader is already running on the server.
+- CRM must not affect auto-trader containers, ports, volumes or database.
+- CRM will use a separate folder and a separate external port.
+
+Selected direction:
+- First candidate: Leantime.
+- Second candidate: Vikunja.
+- Reserve candidate: Redmine.
+
+Target pilot requirements:
+- projects;
+- tasks with due dates;
+- assigned users;
+- roles and permissions;
+- file attachments;
+- calendar;
+- reminders;
+- future Telegram integration for installers.
+
+Deployment rules:
+- use /opt/crm_tsm for CRM files;
+- use port 8082 for the first web access;
+- do not use ports 8001, 6380, 5433 because they are used by auto-trader;
+- do not run global Docker cleanup commands;
+- do not delete Docker volumes unless they are clearly related to CRM.
+
+Next step:
+Deploy Leantime with Docker Compose in /opt/crm_tsm and test it on http://SERVER_IP:8082.
