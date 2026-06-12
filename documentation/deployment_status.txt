@@ -1,0 +1,20 @@
+Deployment status
+
+System: Leantime
+Server path: /opt/crm_tsm
+External port: 8082
+Status: web interface is reachable
+
+Current decision:
+OpenProject is not used on this VPS.
+Leantime is the active pilot system.
+
+Next configuration steps:
+1. Finish installation wizard.
+2. Create first administrator.
+3. Create company or client record for TSM.
+4. Create pilot project TSM CRM Pilot.
+5. Create test task with due date and file attachment.
+6. Add test users and roles.
+7. Validate calendar and notifications.
+8. Plan backup and HTTPS.
