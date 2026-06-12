@@ -1,36 +1,37 @@
 services:
-  openproject:
-    image: openproject/openproject:${OPENPROJECT_TAG:-17}
-    container_name: crm_tsm_openproject
+  db:
+    image: mariadb:10.11
+    container_name: crm_tsm_leantime_db
     restart: unless-stopped
-    ports:
-      - "${OPENPROJECT_PORT:-8080}:80"
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     environment:
-      SECRET_KEY_BASE: "${SECRET_KEY_BASE}"
-      OPENPROJECT_HOST__NAME: "${OPENPROJECT_HOST_NAME:-localhost:8080}"
-      OPENPROJECT_HTTPS: "${OPENPROJECT_HTTPS:-false}"
-      OPENPROJECT_DEFAULT__LANGUAGE: "${OPENPROJECT_DEFAULT_LANGUAGE:-ru}"
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+      MYSQL_DATABASE: "${LEAN_DB_DATABASE}"
+      MYSQL_USER: "${LEAN_DB_USER}"
+      MYSQL_PASSWORD: "${LEAN_DB_PASSWORD}"
     volumes:
-      - openproject_pgdata:/var/openproject/pgdata
-      - openproject_assets:/var/openproject/assets
+      - leantime_db:/var/lib/mysql
 
-  telegram_bot:
-    build:
-      context: ./integrations/telegram_bot
-    container_name: crm_tsm_telegram_bot
+  leantime:
+    image: leantime/leantime:latest
+    container_name: crm_tsm_leantime
     restart: unless-stopped
-    profiles:
-      - bot
-    ports:
-      - "8090:8090"
-    environment:
-      TELEGRAM_BOT_TOKEN: "${TELEGRAM_BOT_TOKEN}"
-      TELEGRAM_ALLOWED_CHAT_ID: "${TELEGRAM_ALLOWED_CHAT_ID}"
-      OPENPROJECT_BASE_URL: "${OPENPROJECT_BASE_URL:-http://openproject}"
-      OPENPROJECT_API_TOKEN: "${OPENPROJECT_API_TOKEN}"
     depends_on:
-      - openproject
+      - db
+    ports:
+      - "${LEANTIME_PORT:-8082}:8080"
+    environment:
+      LEAN_DB_HOST: "db"
+      LEAN_DB_USER: "${LEAN_DB_USER}"
+      LEAN_DB_PASSWORD: "${LEAN_DB_PASSWORD}"
+      LEAN_DB_DATABASE: "${LEAN_DB_DATABASE}"
+      LEAN_EMAIL_RETURN: "${LEAN_EMAIL_RETURN}"
+      LEAN_APP_URL: "${LEAN_APP_URL}"
+    volumes:
+      - leantime_userfiles:/var/www/html/userfiles
+      - leantime_plugins:/var/www/html/app/Plugins
 
 volumes:
-  openproject_pgdata:
-  openproject_assets:
+  leantime_db:
+  leantime_userfiles:
+  leantime_plugins:
