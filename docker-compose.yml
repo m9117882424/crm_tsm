@@ -19,7 +19,7 @@ services:
     depends_on:
       - db
     ports:
-      - "${LEANTIME_PORT:-8082}:8080"
+      - "127.0.0.1:${LEANTIME_PORT:-8082}:8080"
     environment:
       LEAN_DB_HOST: "db"
       LEAN_DB_USER: "${LEAN_DB_USER}"
@@ -27,6 +27,15 @@ services:
       LEAN_DB_DATABASE: "${LEAN_DB_DATABASE}"
       LEAN_EMAIL_RETURN: "${LEAN_EMAIL_RETURN}"
       LEAN_APP_URL: "${LEAN_APP_URL}"
+      LEAN_EMAIL_USE_SMTP: "${LEAN_EMAIL_USE_SMTP}"
+      LEAN_EMAIL_SMTP_HOSTS: "${LEAN_EMAIL_SMTP_HOSTS}"
+      LEAN_EMAIL_SMTP_AUTH: "${LEAN_EMAIL_SMTP_AUTH}"
+      LEAN_EMAIL_SMTP_USERNAME: "${LEAN_EMAIL_SMTP_USERNAME}"
+      LEAN_EMAIL_SMTP_PASSWORD: "${LEAN_EMAIL_SMTP_PASSWORD}"
+      LEAN_EMAIL_SMTP_AUTO_TLS: "${LEAN_EMAIL_SMTP_AUTO_TLS}"
+      LEAN_EMAIL_SMTP_SECURE: "${LEAN_EMAIL_SMTP_SECURE}"
+      LEAN_EMAIL_SMTP_SSLNOVERIFY: "${LEAN_EMAIL_SMTP_SSLNOVERIFY}"
+      LEAN_EMAIL_SMTP_PORT: "${LEAN_EMAIL_SMTP_PORT}"
     volumes:
       - leantime_userfiles:/var/www/html/userfiles
       - leantime_plugins:/var/www/html/app/Plugins
