@@ -14,16 +14,19 @@ Current infrastructure:
 - Leantime runs in Docker Compose from /opt/crm_tsm.
 - Nginx reverse proxy forwards crm.equippulse.com to 127.0.0.1:8082.
 - SSL certificate is installed for crm.equippulse.com.
-- auto-trader remains untouched on its existing ports.
+- Gmail SMTP is configured and email delivery works.
+- Telegram bot test message works.
+- Telegram notification chat: TSM CRM Уведомления.
+- Telegram chat id: -5425439741.
 
 Next configuration steps:
-1. Finish installation wizard if not finished yet.
-2. Create first administrator.
-3. Create company or client record for TSM.
-4. Create pilot project TSM CRM Pilot.
-5. Create test task with due date and file attachment.
-6. Add test users and roles.
-7. Validate calendar and notifications.
-8. Configure backups.
-9. Configure real SMTP.
-10. Plan Telegram integration.
+1. Create or verify final administrator.
+2. Create company or client record for TSM.
+3. Create pilot project TSM CRM Pilot.
+4. Create test task with due date and file attachment.
+5. Add test users and roles.
+6. Validate calendar and notifications.
+7. Configure backups.
+8. Configure Telegram daily summary.
+9. Configure Telegram overdue task reminders.
+10. Plan Telegram commands: /today, /overdue, /help.
