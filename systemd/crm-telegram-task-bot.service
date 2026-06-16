@@ -1,0 +1,18 @@
+[Unit]
+Description=CRM Telegram task command bot
+After=network-online.target docker.service
+Requires=docker.service
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/crm_tsm
+ExecStart=/usr/bin/python3 /opt/crm_tsm/telegram_task_bot.py
+Restart=always
+RestartSec=5
+User=root
+
+StandardOutput=append:/var/log/crm_tsm_telegram_task_bot.log
+StandardError=append:/var/log/crm_tsm_telegram_task_bot.log
+
+[Install]
+WantedBy=multi-user.target
