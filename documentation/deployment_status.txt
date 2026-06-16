@@ -18,15 +18,30 @@ Current infrastructure:
 - Telegram bot test message works.
 - Telegram notification chat: TSM CRM Уведомления.
 - Telegram chat id: -5425439741.
+- Telegram daily summary script is configured and tested.
+- Telegram command bot is configured and tested with the existing bot token.
+- Telegram commands: /help, /summary, /active, /today, /overdue, /unassigned, /addtask, /cancel.
+- /addtask creates Leantime tasks in project Monitoring and assigns Diana Ruban.
+- Task reports show first 10 tasks in chat and attach CSV when there are more than 10 tasks.
+
+Runtime files:
+- /opt/crm_tsm/telegram_tasks_summary.sh
+- /opt/crm_tsm/telegram_task_bot.py
+- /etc/systemd/system/crm-telegram-task-bot.service
+
+Repository files:
+- scripts/telegram_tasks_summary.sh
+- scripts/telegram_task_bot.py
+- systemd/crm-telegram-task-bot.service
+- documentation/telegram_integration.md
 
 Next configuration steps:
 1. Create or verify final administrator.
 2. Create company or client record for TSM.
-3. Create pilot project TSM CRM Pilot.
-4. Create test task with due date and file attachment.
-5. Add test users and roles.
-6. Validate calendar and notifications.
-7. Configure backups.
-8. Configure Telegram daily summary.
-9. Configure Telegram overdue task reminders.
-10. Plan Telegram commands: /today, /overdue, /help.
+3. Create final project structure.
+4. Add users and roles.
+5. Validate calendar and notifications.
+6. Configure backups.
+7. Add project and assignee selection to Telegram /addtask when needed.
+8. Add task status update commands if needed.
+9. Add PDF report format only if management-ready printable reports are required.
