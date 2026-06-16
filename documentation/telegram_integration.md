@@ -220,6 +220,27 @@ curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/setMyCommands
   }'
 ```
 
+## Timeout-noise fix
+
+Telegram API long polling can sometimes return `The read operation timed out`. This is a transient network condition and should not be posted into the group.
+
+Patch helper committed in repository:
+
+```bash
+scripts/apply_telegram_timeout_fix.py
+```
+
+Apply it in a repository checkout:
+
+```bash
+cd /opt/crm_tsm
+python3 scripts/apply_telegram_timeout_fix.py
+install -m 755 scripts/telegram_task_bot.py /opt/crm_tsm/telegram_task_bot.py
+systemctl restart crm-telegram-task-bot.service
+```
+
+After the patch, read timeouts are written only to `/var/log/crm_tsm_telegram_task_bot.log`; non-timeout runtime errors are still sent to Telegram.
+
 ## Operations
 
 Restart bot:
