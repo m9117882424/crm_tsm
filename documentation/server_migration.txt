@@ -1,0 +1,26 @@
+Server migration plan
+
+Goal: move Leantime CRM from the current VPS to a stronger server.
+
+Current production URL:
+https://crm.equippulse.com
+
+Current stack:
+- Leantime Docker Compose
+- MariaDB Docker volume
+- Nginx reverse proxy
+- SSL certificate on current server
+
+Migration approach:
+1. Keep old server running until new server is verified.
+2. Backup Leantime database and uploaded files from the old server.
+3. Install Docker and Nginx on the new server.
+4. Clone crm_tsm repository to /opt/crm_tsm on the new server.
+5. Restore database and file volumes.
+6. Start Leantime on local port 8082.
+7. Configure Nginx reverse proxy and SSL on the new server.
+8. Change DNS A record for crm.equippulse.com to the new server IP.
+9. Verify login, projects, tasks, files and email.
+10. Only then stop Leantime on the old server.
+
+Do not delete the old server before successful verification.
